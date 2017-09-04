@@ -1,6 +1,6 @@
 class OysterCard
-
   attr_accessor :balance, :in_journey
+  attr_reader :station_name
 
   MAXIMUM = 100
 
@@ -9,22 +9,25 @@ class OysterCard
   end
 
   def top_up(amount)
-    fail "#{MAXIMUM} is over your allowed top-up limit" if (@balance + amount) >= MAXIMUM
+    raise "#{MAXIMUM} is over your allowed top-up limit" if (@balance + amount) >= MAXIMUM
     @balance += amount
   end
+
+  def touch_in(station)
+    raise 'You have an insufficient balance' if @balance < 1
+    @station_name = station
+    @in_journey = true
+  end
+
+  def touch_out
+    @balance -= 1
+    @in_journey = false
+  end
+
+  private
 
   def deduct(amount)
     @balance -= amount
   end
-
-  def touch_in
-   fail "You have an insufficient balance" if @balance < 1
-   @in_journey = true
-  end
-
-  def touch_out
-    @in_journey = false
-  end
-
 
 end
