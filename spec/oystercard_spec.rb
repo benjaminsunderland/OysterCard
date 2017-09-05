@@ -31,21 +31,6 @@ it 'will deduct money from the oystercard when touched out' do
   expect{subject.touch_out(:station)}.to change{subject.balance}.by(-1)
 end
 
-it 'changes to journey state to true when touched in' do
-  subject.top_up(10)
-  kingscross = double
-  subject.touch_in(:station)
-  expect(subject.in_journey).to be true
-end
-
-it 'changes the journey state to false when touched out' do
-  subject.top_up(10)
-  kingscross = double
-  subject.touch_in(:station)
-  subject.touch_out(:station)
-  expect(subject.in_journey).to be false
- end
-
 it 'will throw an error with an insufficient balance' do
   kingscross = double
   expect{subject.touch_in(:station)}.to raise_error("You have an insufficient balance")
@@ -68,6 +53,8 @@ it 'adds a journey when touched in and out' do
    expect(subject.list_of_journeys).to include(:entry => :station, :exit => :station)
    expect(subject.list_of_journeys).to include(journey)
 end
+
+
 
 
 end
